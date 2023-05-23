@@ -32,5 +32,18 @@ public class ContaPoupanca extends Conta{
         
         return texto;
     }
-    
+
+    /*@Override
+    public String tipo(){
+        return super.tipo()+"Conta Poupança";
+    }*/
+
+    @Override
+    public String tipo(){
+        return "Conta Poupança";
+    }
+
+    public void render(){
+        rendimento = rendimento + (saldo * taxaRendimento);
+    }
 }

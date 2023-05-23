@@ -1,53 +1,107 @@
 package ifpr.pgua.eic.tads.banco.entidades;
 
-public class Conta {
+//importações
 
-    private String agencia; 
+public abstract class Conta{
+
+    //atributos
+    private String agencia;
     private String numero;
-    private Pessoa cliente; 
-    private double saldo;
-    public Conta(String agencia, String numero, Pessoa cliente, double saldo) {
+    protected double saldo=0;
+    private Pessoa cliente;
+
+    public Conta(String agencia, String numero, Pessoa cliente){
+        this.agencia = agencia;
+        this.numero = numero;
+        this.cliente = cliente;
+    }
+
+    public Conta(String numero, Pessoa cliente){
+        this.agencia = "1234";
+        this.numero = numero;
+        this.cliente = cliente;
+    }
+
+    public Conta(String agencia, String numero, Pessoa cliente, double saldo){
         this.agencia = agencia;
         this.numero = numero;
         this.cliente = cliente;
         this.saldo = saldo;
     }
-    public String getAgencia() {
-        return agencia;
+
+    public void setNumero(String numero){
+        this.numero = numero;
     }
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-    public String getNumero() {
+
+    public String getNumero(){
         return numero;
     }
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-    public Pessoa getCliente() {
-        return cliente;
-    }
-    public void setCliente(Pessoa cliente) {
-        this.cliente = cliente;
-    }
-    public double getSaldo() {
-        return saldo;
-    }
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+
+    /*public void setAgencia(String valor){
+        agencia = valor;
+    }*/
+
+    public String getAgencia(){
+        return agencia;
     }
 
-    
+    /*public void setNomeCliente(String valor){
+        nomeCliente = valor;
+    }*/
+
+    public Pessoa getCliente(){
+        return cliente;
+    }
+
+    public double getSaldo(){
+        return saldo;
+    }
+
+    //metodos
+    public String depositar(double valor){
+
+        if(valor < 0){
+            return "Valor inválido!";
+        }
+        saldo = saldo + valor;
+        return "ok";
+    }
+
+    public String sacar(double valor){
+        if(valor < 0){
+            return "Valor inválido!";
+            //return false;
+        }
+        if(valor > saldo){
+            return "Saldo insuficiente!";
+            //System.out.println("Impossível sacar!!");
+            //return false;
+        }
+        saldo = saldo - valor;
+        return "ok";
+    }
+
     public String gerarExtrato(){
         String texto="";
 
-        texto = "Nome: "+getCliente()+
-                " Agencia: "+getAgencia()+
-                " Numero: "+getNumero()+
-                " Saldo: "+getSaldo();
+        texto = "Agência: " + agencia +
+                " Número: " + numero +
+                " Saldo: " + saldo +
+                " Cliente: " + cliente.getNome();
 
         return texto;
     }
 
+    /*
+    public String tipo(){
+        return "Conta";
+    }*/
+
+    public abstract String tipo();
+
+    //hook method
+    public String tipoCompleto(){
+        return "Este objeto e do tipo "+tipo();
+    }
 
 }

@@ -2,16 +2,15 @@ package ifpr.pgua.eic.tads.banco.controle;
 
 import java.util.ArrayList;
 
-import ifpr.pgua.eic.tads.banco.entidades.ContaBancaria;
+import ifpr.pgua.eic.tads.banco.entidades.Conta;
 import ifpr.pgua.eic.tads.banco.entidades.Pessoa;
 
 public class Banco {
     
-    private ArrayList<ContaBancaria> contas;
+    private ArrayList<Conta> contas;
     private ArrayList<Pessoa> clientes;
 
     private String nome;
-
 
     public Banco(String nome){
         this.nome = nome;
@@ -57,14 +56,13 @@ public class Banco {
         return texto;
     }
 
-    public void criarConta(ContaBancaria conta){
+    public void criarConta(Conta conta){
         contas.add(conta);
     }
 
     public String sacar(String numero, String agencia, double valor){
 
-        
-        for(ContaBancaria aux:contas){
+        for(Conta aux:contas){
             if(aux.getNumero().equals(numero) && 
                aux.getAgencia().equals(agencia)){
                 return aux.sacar(valor);
@@ -72,13 +70,11 @@ public class Banco {
         }
 
         return "Conta não encontrada!!";
-
     }
 
     public String depositar(String numero, String agencia, double valor){
 
-        
-        for(ContaBancaria aux:contas){
+        for(Conta aux:contas){
             if(aux.getNumero().equals(numero) && 
                aux.getAgencia().equals(agencia)){
                 return aux.depositar(valor);
@@ -86,20 +82,15 @@ public class Banco {
         }
 
         return "Conta não encontrada!!";
-
     }
 
     public String relatorio(){
         String relatorio="";
 
-        for(ContaBancaria aux:contas){
-            relatorio=aux.mostrarSaldo()+"\n";
+        for(Conta aux:contas){
+            relatorio=aux.gerarExtrato()+"\n";
         }
 
         return relatorio;
-
     }
-
-
-
 }
